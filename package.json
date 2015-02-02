@@ -1,6 +1,8 @@
 {
     "name": "node-tech-http",
     "version": "1.0.0",
+    "description": "Expose main http methods (POST, GET, PUT).",
+    "license": "MIT",
     "main": "techHttp.js",
     "repository": {
         "type": "git",
@@ -8,10 +10,10 @@
     },
     "dependencies": {
         "bluebird": "^2.3.2",
-        "node-tech-time": "git://github.com/AirVantage/node-tech-time.git#1.0.0",
+        "lodash": "^3.0.1",
         "node-tech-ruuid": "git://github.com/AirVantage/node-tech-ruuid.git#1.0.0",
-        "request": "^2.40.0",
-        "underscore": "^1.7.0"
+        "node-tech-time": "git://github.com/AirVantage/node-tech-time.git#1.0.0",
+        "request": "^2.40.0"
     },
     "devDependencies": {
         "chai": "^1.9.1",

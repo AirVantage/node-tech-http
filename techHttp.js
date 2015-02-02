@@ -1,8 +1,8 @@
-var _ = require("underscore");
-var events = require("events");
-var techTime = require("node-tech-time");
-var techRuuid = require("node-tech-ruuid");
+var _ = require("lodash");
 var BPromise = require("bluebird");
+var events = require("events");
+var techRuuid = require("node-tech-ruuid");
+var techTime = require("node-tech-time");
 
 module.exports = function(mockRequest) {
 
