@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+    grunt.loadNpmTasks("grunt-tag");
     grunt.loadNpmTasks("grunt-release");
     grunt.loadNpmTasks('grunt-mocha-test');
 
