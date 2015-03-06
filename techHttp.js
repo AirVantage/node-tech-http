@@ -3,6 +3,7 @@ var BPromise = require("bluebird");
 var events = require("events");
 var techRuuid = require("node-tech-ruuid");
 var techTime = require("node-tech-time");
+var logger = require("node-tech-logger");
 
 module.exports = function(mockRequest) {
 
@@ -14,7 +15,7 @@ module.exports = function(mockRequest) {
 
         techRuuid.check(ruuid);
 
-        category = category || "AppCore";
+        category = category || "core";
 
         var start = techTime.start();
 
@@ -42,17 +43,43 @@ module.exports = function(mockRequest) {
 
     }
 
+    /**
+     * Simpler form of get
+     *
+     * @param options.url
+     * @param [options.category]
+     * @param [options.timeout]
+     * @param [options.auth]
+     * @param [options.headers]
+     *
+     * Options object is also passed as such to the 'request' library'
+     */
+    function getFromOpts(ruuid, opts) {
+        logger.info("[tech-http] Getting from opts", opts);
+        return wrapRequest(ruuid, "getAsync", _.extend({
+            json : true
+        }, opts), opts.category);
+    }
+
     return {
         on: emitter.on.bind(emitter),
 
         // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
         get: function wrapGet(ruuid, url, category, timeout, auth, options) {
-            return wrapRequest(ruuid, "getAsync", _.extend({
-                url: url,
-                json: true,
-                auth: auth,
-                timeout: timeout
-            }, options), category);
+
+            if (!_.isString(url) && arguments.length === 2) {
+                var opts = url;
+                return getFromOpts(ruuid, opts);
+            } else {
+                return wrapRequest(ruuid, "getAsync", _.extend({
+                    url: url,
+                    json: true,
+                    auth: auth,
+                    timeout: timeout
+                }, options), category);
+
+            }
+
         },
 
         // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
