@@ -5,13 +5,13 @@ var BPromise = require("bluebird");
 
 describe("tech-http", function() {
 
-    it("accepts get with a single arg", function () {
+    it("accepts get with a single arg", function() {
         var mockRequest = {
-            getAsync : function (url, opts) {
+            getAsync: function(url, opts) {
                 assert.equal(url, "http://foo:8080/api/bar/baz");
                 assert.equal(opts.headers["X-foo"], "bar");
                 return BPromise.resolve([{
-                    statusCode : 200
+                    statusCode: 200
                 }, {}]);
             }
         };
@@ -19,9 +19,9 @@ describe("tech-http", function() {
         var http = techHttp(mockRequest);
 
         return http.get("avop-ruuid-45", {
-            url : "http://foo:8080/api/bar/baz",
-            headers : {
-                "X-foo" : "bar"
+            url: "http://foo:8080/api/bar/baz",
+            headers: {
+                "X-foo": "bar"
             }
         });
 

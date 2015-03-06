@@ -57,7 +57,7 @@ module.exports = function(mockRequest) {
     function getFromOpts(ruuid, opts) {
         logger.info("[tech-http] Getting from opts", opts);
         return wrapRequest(ruuid, "getAsync", _.extend({
-            json : true
+            json: true
         }, opts));
     }
 
