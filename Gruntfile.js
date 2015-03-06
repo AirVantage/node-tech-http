@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+    grunt.loadNpmTasks("grunt-release");
     grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.initConfig({
@@ -17,6 +18,22 @@ module.exports = function(grunt) {
                     captureFile: "reports/json/TEST-tech-http.json"
                 },
                 src: ['test/**/*.js']
+            }
+        },
+        release: {
+            options: {
+                npm: false, // Important to avoid pushing to npm.org
+                afterReleaseTasks: ['tag'],
+                github: {
+                    repo: "AirVantage/node-tech-http",
+                    usernameVar: 'GITHUB_USERNAME',
+                    passwordVar: 'GITHUB_PASSWORD'
+                }
+            }
+        },
+        tag: {
+            options: {
+                tagName: '<%= version.match(/\\d*/) %>.x'
             }
         }
     });
