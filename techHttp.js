@@ -57,7 +57,7 @@ module.exports = function(mockRequest) {
     function getFromOpts(ruuid, opts) {
         logger.info("[tech-http] Getting from opts", opts);
         return wrapRequest(ruuid, "getAsync", _.extend({
-            json : true
+            json: true
         }, opts), opts.category);
     }
 
@@ -85,6 +85,16 @@ module.exports = function(mockRequest) {
         // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
         post: function wrapPost(ruuid, url, body, category, timeout, auth, options) {
             return wrapRequest(ruuid, "postAsync", _.extend({
+                url: url,
+                json: body,
+                auth: auth,
+                timeout: timeout
+            }, options), category);
+        },
+
+        // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
+        delete: function wrapDelete(ruuid, url, body, category, timeout, auth, options) {
+            return wrapRequest(ruuid, "delAsync", _.extend({
                 url: url,
                 json: body,
                 auth: auth,
