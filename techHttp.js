@@ -55,7 +55,6 @@ module.exports = function(mockRequest) {
      * Options object is also passed as such to the 'request' library'
      */
     function getFromOpts(ruuid, opts) {
-        logger.info("[tech-http] Getting from opts", opts);
         return wrapRequest(ruuid, "getAsync", _.extend({
             json: true
         }, opts), opts.category);
