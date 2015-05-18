@@ -19,6 +19,9 @@ module.exports = function(mockRequest) {
 
         var start = techTime.start();
 
+        logger.debug("[http] Request options", options);
+        logger.debug("[http] Request headers", options.headers);
+
         return request[fnName](options.url, options).then(function(responseAndBody) {
             var response = responseAndBody[0];
             var body = responseAndBody[1];
