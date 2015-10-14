@@ -22,13 +22,10 @@ module.exports = function(mockRequest) {
         logger.debug("[http] Request options", options);
         logger.debug("[http] Request headers", options.headers);
 
-        return request[fnName](options.url, options).then(function(responseAndBody) {
-            var response = responseAndBody[0];
-            var body = responseAndBody[1];
-
+        return request[fnName](options.url, options).spread(function(response, body) {
             emitter.emit("http", {
                 category: category,
-                ruuid: ruuid || 'unknown',
+                ruuid: ruuid || "unknown",
                 url: options.url,
                 duration: techTime.end(start)
             });
@@ -41,9 +38,7 @@ module.exports = function(mockRequest) {
                     body: body
                 });
             }
-
         });
-
     }
 
     /**
@@ -79,9 +74,7 @@ module.exports = function(mockRequest) {
                     auth: auth,
                     timeout: timeout
                 }, options), category);
-
             }
-
         },
 
         // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
