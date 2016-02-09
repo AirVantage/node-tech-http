@@ -81,7 +81,8 @@ module.exports = function(mockRequest) {
         post: function wrapPost(ruuid, url, body, category, timeout, auth, options) {
             return wrapRequest(ruuid, "postAsync", _.extend({
                 url: url,
-                json: body,
+                body: body,
+                json: true,
                 auth: auth,
                 timeout: timeout
             }, options), category);
@@ -91,7 +92,8 @@ module.exports = function(mockRequest) {
         delete: function wrapDelete(ruuid, url, body, category, timeout, auth, options) {
             return wrapRequest(ruuid, "delAsync", _.extend({
                 url: url,
-                json: body,
+                body: body,
+                json: true,
                 auth: auth,
                 timeout: timeout
             }, options), category);
@@ -101,7 +103,8 @@ module.exports = function(mockRequest) {
         put: function wrapPut(ruuid, url, body, category, timeout, auth, options) {
             return wrapRequest(ruuid, "putAsync", _.extend({
                 url: url,
-                json: body,
+                body: body,
+                json: true,
                 auth: auth,
                 timeout: timeout
             }, options), category);
