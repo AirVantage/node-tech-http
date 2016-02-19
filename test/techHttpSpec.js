@@ -5,13 +5,13 @@ var BPromise = require("bluebird");
 
 describe("tech-http", function() {
 
-    it("accepts get with a single arg", function () {
+    it("accepts get with a single arg", function() {
         var mockRequest = {
-            getAsync : function (url, opts) {
+            getAsync: function(url, opts) {
                 assert.equal(url, "http://foo:8080/api/bar/baz");
                 assert.equal(opts.headers["X-foo"], "bar");
                 return BPromise.resolve([{
-                    statusCode : 200
+                    statusCode: 200
                 }, {}]);
             }
         };
@@ -22,10 +22,10 @@ describe("tech-http", function() {
             assert.equal(what.category, "cat");
         });
         return http.get("avop-ruuid-45", {
-            url : "http://foo:8080/api/bar/baz",
-            category : "cat",
-            headers : {
-                "X-foo" : "bar"
+            url: "http://foo:8080/api/bar/baz",
+            category: "cat",
+            headers: {
+                "X-foo": "bar"
             }
         });
 
@@ -59,7 +59,9 @@ describe("tech-http", function() {
             duration = what.duration;
         });
 
-        return http.get("avop-ruuid-42", "http://foo:8080/api/bar/baz").then(function(result) {
+        return http.get("avop-ruuid-42", {
+            url: "http://foo:8080/api/bar/baz"
+        }).then(function(result) {
             assert.ok(result.foo === "bar", "request apis should have been wrapped");
             assert.ok(parseFloat(duration.ms) > 90, "the request time should have been logged");
             assert.ok(parseFloat(duration.ms) < 250, "the request time should not be that huge !");
