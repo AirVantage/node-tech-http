@@ -55,6 +55,12 @@ module.exports = function(mockRequest) {
          * @param [options.json]
          */
         get: function wrapGet(ruuid, options) {
+            if (_.isString(options)) {
+                options = {
+                    url: options
+                };
+            }
+
             return wrapRequest(ruuid, "getAsync", _.extend({
                 json: true
             }, options), options.category);
