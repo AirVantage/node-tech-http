@@ -41,73 +41,80 @@ module.exports = function(mockRequest) {
         });
     }
 
-    /**
-     * Simpler form of get
-     *
-     * @param options.url
-     * @param [options.category]
-     * @param [options.timeout]
-     * @param [options.auth]
-     * @param [options.headers]
-     *
-     * Options object is also passed as such to the 'request' library'
-     */
-    function getFromOpts(ruuid, opts) {
-        return wrapRequest(ruuid, "getAsync", _.extend({
-            json: true
-        }, opts), opts.category);
-    }
-
     return {
         on: emitter.on.bind(emitter),
 
-        // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
-        get: function wrapGet(ruuid, url, category, timeout, auth, options) {
-
-            if (!_.isString(url) && arguments.length === 2) {
-                var opts = url;
-                return getFromOpts(ruuid, opts);
-            } else {
-                return wrapRequest(ruuid, "getAsync", _.extend({
-                    url: url,
-                    json: true,
-                    auth: auth,
-                    timeout: timeout
-                }, options), category);
+        /**
+         * http get
+         *
+         * @param options.url
+         * @param [options.category]
+         * @param [options.timeout]
+         * @param [options.auth]
+         * @param [options.headers]
+         * @param [options.json]
+         */
+        get: function wrapGet(ruuid, options) {
+            if (_.isString(options)) {
+                options = {
+                    url: options
+                };
             }
+
+            return wrapRequest(ruuid, "getAsync", _.extend({
+                json: true
+            }, options), options.category);
         },
 
-        // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
-        post: function wrapPost(ruuid, url, body, category, timeout, auth, options) {
+        /**
+         * http post
+         *
+         * @param options.url
+         * @param [options.category]
+         * @param [options.timeout]
+         * @param [options.auth]
+         * @param [options.headers]
+         * @param [options.json]
+         * @param [options.body]
+         */
+        post: function wrapPost(ruuid, options) {
             return wrapRequest(ruuid, "postAsync", _.extend({
-                url: url,
-                body: body,
-                json: true,
-                auth: auth,
-                timeout: timeout
-            }, options), category);
+                json: true
+            }, options), options.category);
         },
 
-        // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
-        delete: function wrapDelete(ruuid, url, body, category, timeout, auth, options) {
+        /**
+         * http delete
+         *
+         * @param options.url
+         * @param [options.category]
+         * @param [options.timeout]
+         * @param [options.auth]
+         * @param [options.headers]
+         * @param [options.json]
+         * @param [options.body]
+         */
+        delete: function wrapDelete(ruuid, options) {
             return wrapRequest(ruuid, "delAsync", _.extend({
-                url: url,
-                body: body,
-                json: true,
-                auth: auth,
-                timeout: timeout
-            }, options), category);
+                json: true
+            }, options), options.category);
         },
 
-        // TODO [JLE] 'timeout' and 'auth' should be removed and declared instead directly in the given 'options' parameter
-        put: function wrapPut(ruuid, url, body, category, timeout, auth, options) {
+        /**
+         * http put
+         *
+         * @param options.url
+         * @param [options.category]
+         * @param [options.timeout]
+         * @param [options.auth]
+         * @param [options.headers]
+         * @param [options.json]
+         * @param [options.body]
+         */
+        put: function wrapPut(ruuid, options) {
             return wrapRequest(ruuid, "putAsync", _.extend({
-                url: url,
-                body: body,
-                json: true,
-                auth: auth,
-                timeout: timeout
-            }, options), category);
+                json: true
+            }, options), options.category);
         }
     };
 };
