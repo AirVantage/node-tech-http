@@ -27,8 +27,7 @@ module.exports = function(grunt) {
                 afterReleaseTasks: ['tag'],
                 github: {
                     repo: "AirVantage/node-tech-http",
-                    usernameVar: 'GITHUB_USERNAME',
-                    passwordVar: 'GITHUB_PASSWORD'
+                    accessTokenVar: "GITHUB_ACCESS_TOKEN"
                 }
             }
         },
