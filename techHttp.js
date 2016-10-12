@@ -61,7 +61,7 @@ module.exports = function(mockRequest) {
                 };
             }
 
-            return wrapRequest(ruuid, "getAsync", _.extend({
+            return wrapRequest(ruuid, "getAsync", _.assignIn({
                 json: true
             }, options), options.category);
         },
@@ -78,7 +78,7 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
         post: function wrapPost(ruuid, options) {
-            return wrapRequest(ruuid, "postAsync", _.extend({
+            return wrapRequest(ruuid, "postAsync", _.assignIn({
                 json: true
             }, options), options.category);
         },
@@ -95,7 +95,7 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
         delete: function wrapDelete(ruuid, options) {
-            return wrapRequest(ruuid, "delAsync", _.extend({
+            return wrapRequest(ruuid, "delAsync", _.assignIn({
                 json: true
             }, options), options.category);
         },
@@ -112,7 +112,7 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
         put: function wrapPut(ruuid, options) {
-            return wrapRequest(ruuid, "putAsync", _.extend({
+            return wrapRequest(ruuid, "putAsync", _.assignIn({
                 json: true
             }, options), options.category);
         }
