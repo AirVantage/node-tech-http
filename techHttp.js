@@ -30,7 +30,7 @@ module.exports = function(mockRequest) {
                 duration: techTime.end(start)
             });
 
-            if (response && _.contains([200, 201, 202, 203, 204, 205, 206], response.statusCode)) {
+            if (response && _.includes([200, 201, 202, 203, 204, 205, 206], response.statusCode)) {
                 return body;
             } else {
                 return BPromise.reject({
