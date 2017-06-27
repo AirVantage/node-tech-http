@@ -5,6 +5,42 @@ var techRuuid = require("node-tech-ruuid");
 var techTime = require("node-tech-time");
 var logger = require("node-tech-logger");
 
+const KEYS_TO_HIDE = ["pass", "secret", "token"];
+
+function isKeyASecret(key) {
+    const matchRegex = keyToHide => {
+        // Does the key match one of the hidden keys pattern
+        return key.match(new RegExp(`.*${keyToHide}.*`, "i")) !== null;
+    };
+
+    return _.some(KEYS_TO_HIDE, matchRegex);
+}
+
+function maskObject(obj) {
+    return _.transform(obj, (newObj, value, key) => {
+        const toBeHidden = isKeyASecret(key);
+        if (_.isArray(value)) {
+            newObj[key] = toBeHidden ? _.map(value, () => "****") : maskArray(value);
+        } else if (_.isObject(value)) {
+            newObj[key] = toBeHidden ? { "****": "****" } : maskObject(value);
+        } else {
+            newObj[key] = toBeHidden ? "****" : value;
+        }
+    }, {});
+}
+
+function maskArray(array) {
+    return _.map(array, value => {
+        if (_.isArray(value)) {
+            return maskArray(value);
+        } else if (_.isObject(value)) {
+            return maskObject(value);
+        } else {
+            return value;
+        }
+    });
+}
+
 module.exports = function(mockRequest) {
 
     var request = mockRequest || BPromise.promisifyAll(require("request"));
@@ -19,8 +55,8 @@ module.exports = function(mockRequest) {
 
         var start = techTime.start();
 
-        logger.debug("[http] Request options", options);
-        logger.debug("[http] Request headers", options.headers);
+        logger.debug("[http] Request options", maskObject(options));
+        logger.debug("[http] Request headers", maskObject(options.headers));
 
         return request[fnName](options.url, options).spread(function(response, body) {
             emitter.emit("http", {
