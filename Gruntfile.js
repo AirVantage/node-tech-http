@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
-
-    grunt.loadNpmTasks("grunt-tag");
-    grunt.loadNpmTasks("grunt-release");
+    grunt.loadNpmTasks('grunt-tag');
+    grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.initConfig({
@@ -16,7 +15,7 @@ module.exports = function(grunt) {
                 options: {
                     reporter: 'json',
                     quiet: true,
-                    captureFile: "reports/json/TEST-tech-http.json"
+                    captureFile: 'reports/json/TEST-tech-http.json'
                 },
                 src: ['test/**/*.js']
             }
@@ -26,8 +25,8 @@ module.exports = function(grunt) {
                 npm: false, // Important to avoid pushing to npm.org
                 afterReleaseTasks: ['tag'],
                 github: {
-                    repo: "AirVantage/node-tech-http",
-                    accessTokenVar: "GITHUB_ACCESS_TOKEN"
+                    repo: 'AirVantage/node-tech-http',
+                    accessTokenVar: 'GITHUB_ACCESS_TOKEN'
                 }
             }
         },
@@ -40,5 +39,4 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['mochaTest:test_spec']);
     grunt.registerTask('test-json', ['mochaTest:test_json']);
-
 };

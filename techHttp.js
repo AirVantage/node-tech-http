@@ -1,31 +1,29 @@
-var _ = require("lodash");
-var BPromise = require("bluebird");
-var events = require("events");
-var techRuuid = require("node-tech-ruuid");
-var techTime = require("node-tech-time");
-var logger = require("node-tech-logger");
+var _ = require('lodash');
+var BPromise = require('bluebird');
+var events = require('events');
+var techRuuid = require('node-tech-ruuid');
+var techTime = require('node-tech-time');
+var logger = require('node-tech-logger');
 
 module.exports = function(mockRequest) {
-
-    var request = mockRequest || BPromise.promisifyAll(require("request"));
+    var request = mockRequest || BPromise.promisifyAll(require('request'));
 
     var emitter = new events.EventEmitter();
 
     function wrapRequest(ruuid, fnName, options, category) {
-
         techRuuid.check(ruuid);
 
-        category = category || "core";
+        category = category || 'core';
 
         var start = techTime.start();
 
-        logger.debug("[http] Request options", options);
-        logger.debug("[http] Request headers", options.headers);
+        logger.debug('[http] Request options', options);
+        logger.debug('[http] Request headers', options.headers);
 
         return request[fnName](options.url, options).spread(function(response, body) {
-            emitter.emit("http", {
+            emitter.emit('http', {
                 category: category,
-                ruuid: ruuid || "unknown",
+                ruuid: ruuid || 'unknown',
                 url: options.url,
                 duration: techTime.end(start)
             });
@@ -61,9 +59,17 @@ module.exports = function(mockRequest) {
                 };
             }
 
-            return wrapRequest(ruuid, "getAsync", _.assignIn({
-                json: true
-            }, options), options.category);
+            return wrapRequest(
+                ruuid,
+                'getAsync',
+                _.assignIn(
+                    {
+                        json: true
+                    },
+                    options
+                ),
+                options.category
+            );
         },
 
         /**
@@ -78,9 +84,17 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
         post: function wrapPost(ruuid, options) {
-            return wrapRequest(ruuid, "postAsync", _.assignIn({
-                json: true
-            }, options), options.category);
+            return wrapRequest(
+                ruuid,
+                'postAsync',
+                _.assignIn(
+                    {
+                        json: true
+                    },
+                    options
+                ),
+                options.category
+            );
         },
 
         /**
@@ -95,9 +109,17 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
         delete: function wrapDelete(ruuid, options) {
-            return wrapRequest(ruuid, "delAsync", _.assignIn({
-                json: true
-            }, options), options.category);
+            return wrapRequest(
+                ruuid,
+                'delAsync',
+                _.assignIn(
+                    {
+                        json: true
+                    },
+                    options
+                ),
+                options.category
+            );
         },
 
         /**
@@ -112,9 +134,17 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
         put: function wrapPut(ruuid, options) {
-            return wrapRequest(ruuid, "putAsync", _.assignIn({
-                json: true
-            }, options), options.category);
+            return wrapRequest(
+                ruuid,
+                'putAsync',
+                _.assignIn(
+                    {
+                        json: true
+                    },
+                    options
+                ),
+                options.category
+            );
         }
     };
 };
