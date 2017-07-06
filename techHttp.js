@@ -59,17 +59,7 @@ module.exports = function(mockRequest) {
         };
       }
 
-      return wrapRequest(
-        ruuid,
-        'getAsync',
-        _.assignIn(
-          {
-            json: true
-          },
-          options
-        ),
-        options.category
-      );
+      return wrapRequest(ruuid, 'getAsync', _.assignIn({ json: true }, options), options.category);
     },
 
     /**
@@ -84,17 +74,7 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
     post: function wrapPost(ruuid, options) {
-      return wrapRequest(
-        ruuid,
-        'postAsync',
-        _.assignIn(
-          {
-            json: true
-          },
-          options
-        ),
-        options.category
-      );
+      return wrapRequest(ruuid, 'postAsync', _.assignIn({ json: true }, options), options.category);
     },
 
     /**
@@ -109,17 +89,7 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
     delete: function wrapDelete(ruuid, options) {
-      return wrapRequest(
-        ruuid,
-        'delAsync',
-        _.assignIn(
-          {
-            json: true
-          },
-          options
-        ),
-        options.category
-      );
+      return wrapRequest(ruuid, 'delAsync', _.assignIn({ json: true }, options), options.category);
     },
 
     /**
@@ -134,17 +104,7 @@ module.exports = function(mockRequest) {
          * @param [options.body]
          */
     put: function wrapPut(ruuid, options) {
-      return wrapRequest(
-        ruuid,
-        'putAsync',
-        _.assignIn(
-          {
-            json: true
-          },
-          options
-        ),
-        options.category
-      );
+      return wrapRequest(ruuid, 'putAsync', _.assignIn({ json: true }, options), options.category);
     }
   };
 };
