@@ -1,39 +1,40 @@
 {
-    "name": "node-tech-http",
-    "version": "5.0.1",
-    "description": "Expose main http methods (POST, GET, PUT).",
-    "license": "MIT",
-    "main": "techHttp.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/AirVantage/node-tech-http.git"
+  "name": "node-tech-http",
+  "version": "5.0.1",
+  "description": "Expose main http methods (POST, GET, PUT).",
+  "license": "MIT",
+  "main": "techHttp.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AirVantage/node-tech-http.git"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.9",
+    "lodash": "^4.16.0",
+    "node-tech-logger": "git://github.com/AirVantage/node-tech-logger.git#3.x",
+    "node-tech-ruuid": "git://github.com/AirVantage/node-tech-ruuid.git#1.x",
+    "node-tech-time": "git://github.com/AirVantage/node-tech-time.git#1.x",
+    "request": "^2.53.0"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "eslint": "^4.1.1",
+    "grunt": "^0.4.5",
+    "grunt-mocha-test": "^0.11.0",
+    "grunt-release": "^0.11.0",
+    "grunt-tag": "^0.1.0",
+    "prettier": "^1.5.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true,
+      "mocha": true
     },
-    "dependencies": {
-        "bluebird": "^2.9.9",
-        "lodash": "^4.16.0",
-        "node-tech-logger": "git://github.com/AirVantage/node-tech-logger.git#3.x",
-        "node-tech-ruuid": "git://github.com/AirVantage/node-tech-ruuid.git#1.x",
-        "node-tech-time": "git://github.com/AirVantage/node-tech-time.git#1.x",
-        "request": "^2.53.0"
-    },
-    "devDependencies": {
-        "chai": "^1.9.1",
-        "eslint": "^4.1.1",
-        "grunt": "^0.4.5",
-        "grunt-mocha-test": "^0.11.0",
-        "grunt-release": "^0.11.0",
-        "grunt-tag": "^0.1.0",
-        "prettier": "^1.5.2"
-    },
-    "eslintConfig": {
-        "env": {
-            "node": true,
-            "es6": true,
-            "mocha": true
-        },
-        "extends": ["eslint:recommended"],
-        "rules": {
-            "linebreak-style": ["error", "unix"]
-        }
+    "extends": ["eslint:recommended"],
+    "rules": {
+      "linebreak-style": ["error", "unix"],
+      "max-params": ["warn", 3]
     }
+  }
 }
