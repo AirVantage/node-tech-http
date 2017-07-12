@@ -8,12 +8,7 @@ describe('tech-http', function() {
     var mockRequest = {
       getAsync: function(url, opts) {
         assert.equal(url, 'http://foo:8080/api/bar/baz');
-        return BPromise.resolve([
-          {
-            statusCode: 200
-          },
-          {}
-        ]);
+        return BPromise.resolve([{ statusCode: 200 }, {}]);
       }
     };
 
@@ -32,14 +27,7 @@ describe('tech-http', function() {
         // Simulate a requests that takes a few milliseconds to run
         return new BPromise(function(resolve, reject) {
           setTimeout(function() {
-            resolve([
-              {
-                statusCode: 200
-              },
-              {
-                foo: 'bar'
-              }
-            ]);
+            resolve([{ statusCode: 200 }, { foo: 'bar' }]);
           }, 100);
         });
       }
@@ -58,9 +46,7 @@ describe('tech-http', function() {
       .get('avop-ruuid-42', {
         url: 'http://foo:8080/api/bar/baz',
         category: 'cat',
-        headers: {
-          'X-foo': 'bar'
-        }
+        headers: { 'X-foo': 'bar' }
       })
       .then(
         function(result) {

@@ -54,9 +54,7 @@ module.exports = function(mockRequest) {
          */
     get: function wrapGet(ruuid, options) {
       if (_.isString(options)) {
-        options = {
-          url: options
-        };
+        options = { url: options };
       }
 
       return wrapRequest(ruuid, 'getAsync', _.assignIn({ json: true }, options), options.category);
