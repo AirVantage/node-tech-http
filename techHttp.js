@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var BPromise = require('bluebird');
 var events = require('events');
-var techRuuid = require('node-tech-ruuid');
 var techTime = require('node-tech-time');
 
 module.exports = function(mockRequest) {
@@ -10,8 +9,6 @@ module.exports = function(mockRequest) {
   var emitter = new events.EventEmitter();
 
   function wrapRequest(ruuid, fnName, options, category) {
-    techRuuid.check(ruuid);
-
     category = category || 'core';
 
     var start = techTime.start();
