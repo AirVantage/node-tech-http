@@ -1,6 +1,6 @@
 {
   "name": "node-tech-http",
-  "version": "5.2.0",
+  "version": "5.3.0",
   "description": "Expose main http methods (POST, GET, PUT).",
   "license": "MIT",
   "main": "techHttp.js",
