@@ -1,101 +1,28 @@
-var _ = require('lodash');
-var BPromise = require('bluebird');
-var events = require('events');
-var techTime = require('node-tech-time');
+const _ = require('lodash');
+const BPromise = require('bluebird');
 
-module.exports = function(mockRequest) {
-  var request = mockRequest || BPromise.promisifyAll(require('request'));
+module.exports = mockRequest => {
+  const request = mockRequest || BPromise.promisifyAll(require('request'));
 
-  var emitter = new events.EventEmitter();
-
-  function wrapRequest(ruuid, fnName, options, category) {
-    category = category || 'core';
-
-    var start = techTime.start();
-
-    return request[fnName](options.url, options).spread(function(response, body) {
-      emitter.emit('http', {
-        category: category,
-        ruuid: ruuid || 'unknown',
-        url: options.url,
-        duration: techTime.end(start)
-      });
-
+  const wrapRequest = (fnName, options) => {
+    return request[fnName](options.url, options).spread((response, body) => {
       if (response && _.includes([200, 201, 202, 203, 204, 205, 206], response.statusCode)) {
         return body;
-      } else {
-        return BPromise.reject({
-          response: response ? response.statusCode : response,
-          body: body
-        });
       }
+      return BPromise.reject({ body, response: response ? response.statusCode : response });
     });
-  }
+  };
 
   return {
-    on: emitter.on.bind(emitter),
+    get: (ruuid, options) =>
+      _.isString(options)
+        ? wrapRequest('getAsync', { json: true, url: options })
+        : wrapRequest('getAsync', _.assignIn({ json: true }, options)),
 
-    /**
-     * http get
-     *
-     * @param options.url
-     * @param [options.category]
-     * @param [options.timeout]
-     * @param [options.auth]
-     * @param [options.headers]
-     * @param [options.json]
-     */
-    get: function wrapGet(ruuid, options) {
-      if (_.isString(options)) {
-        options = { url: options };
-      }
+    post: (ruuid, options) => wrapRequest('postAsync', _.assignIn({ json: true }, options)),
 
-      return wrapRequest(ruuid, 'getAsync', _.assignIn({ json: true }, options), options.category);
-    },
+    delete: (ruuid, options) => wrapRequest('delAsync', _.assignIn({ json: true }, options)),
 
-    /**
-     * http post
-     *
-     * @param options.url
-     * @param [options.category]
-     * @param [options.timeout]
-     * @param [options.auth]
-     * @param [options.headers]
-     * @param [options.json]
-     * @param [options.body]
-     */
-    post: function wrapPost(ruuid, options) {
-      return wrapRequest(ruuid, 'postAsync', _.assignIn({ json: true }, options), options.category);
-    },
-
-    /**
-     * http delete
-     *
-     * @param options.url
-     * @param [options.category]
-     * @param [options.timeout]
-     * @param [options.auth]
-     * @param [options.headers]
-     * @param [options.json]
-     * @param [options.body]
-     */
-    delete: function wrapDelete(ruuid, options) {
-      return wrapRequest(ruuid, 'delAsync', _.assignIn({ json: true }, options), options.category);
-    },
-
-    /**
-     * http put
-     *
-     * @param options.url
-     * @param [options.category]
-     * @param [options.timeout]
-     * @param [options.auth]
-     * @param [options.headers]
-     * @param [options.json]
-     * @param [options.body]
-     */
-    put: function wrapPut(ruuid, options) {
-      return wrapRequest(ruuid, 'putAsync', _.assignIn({ json: true }, options), options.category);
-    }
+    put: (ruuid, options) => wrapRequest('putAsync', _.assignIn({ json: true }, options))
   };
 };

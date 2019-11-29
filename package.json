@@ -11,7 +11,6 @@
   "dependencies": {
     "bluebird": "^2.9.9",
     "lodash": "^4.16.0",
-    "node-tech-time": "git://github.com/AirVantage/node-tech-time.git#1.x",
     "request": "^2.53.0"
   },
   "devDependencies": {
